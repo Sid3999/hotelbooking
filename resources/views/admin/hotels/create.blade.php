@@ -66,11 +66,11 @@
                                         <div class="form-group">
                                             <label class="form-control-label">Rent Range</label>
                                             <select name="rent_range" id="rent_range" class="form-control">
-                                                <option value="5k-15k">5k-15k</option>
-                                                <option value="5k-30k">5k-30k</option>
-                                                <option value="10k-60k">10k-60k</option>
-                                                <option value="10k-60k">10k-60k</option>
-                                                <option value="10k-100k">10k-100k</option>
+                                                <option value="1k-10k">1k-10k</option>
+                                                <option value="10k-30k">10k-30k</option>
+                                                <option value="30k-60k">30k-60k</option>
+                                                <option value="60k-100k">60k-100k</option>
+                                                <option value="100k+">100k+</option>
                                             </select>
                                         </div>
                                     </div>
@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="form-control-label">Provience</label>
+                                            <label class="form-control-label">Province</label>
                                             <select name="provience" id="provience" class="form-control">
                                                 <option value="ICT">ICT</option>
                                                 <option value="KP">KP</option>
@@ -101,11 +101,11 @@
                                         <div class="form-group">
                                             <label class="form-control-label">City</label>
                                             <select name="city" id="city" class="form-control">
-                                                <option value="abbottabad">Abbottabad</option>
-                                                <option value="islamabad">Islamabad</option>
-                                                <option value="rawalpindi">Rawalpindi</option>
-                                                <option value="lahore">Lahore</option>
-                                                <option value="karachi">Karachi</option>
+                                                @foreach($citys as $city)
+                                              
+                                                <option value="{{$city->id}}">{{$city->name}}</option>
+                                                @endforeach
+                                            
                                             </select>
                                         </div>
                                     </div>

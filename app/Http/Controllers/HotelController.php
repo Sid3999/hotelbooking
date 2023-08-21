@@ -25,13 +25,14 @@ class HotelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
+        $cities = City::all();
         if (Auth::user()->roles->first()->id == 1) {
             $hotels = Hotel::all();
         } else {
             $hotels = Hotel::where('user_id', auth()->user()->id)->get();
         }
-        return view('admin.hotels.index', compact('hotels'));
+        return view('admin.hotels.index', compact('hotels' , 'cities'));
     }
 
     /**

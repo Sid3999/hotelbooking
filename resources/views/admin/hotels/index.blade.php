@@ -35,6 +35,78 @@
                         </span>
                     </h3>
                 </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                        <select class="form-control" name="province" id = "province" style="
+                        margin-left: 20px;">
+                           
+                            <option value="0">Province </option>
+                            <option value="ICT">ICT</option>
+                            <option value="KP">KP</option>
+                            <option value="Punjab">Pubjab</option>
+                            <option value="Sindh">Sindh</option>
+                            <option value="Balochistan">Balochistan</option>
+                            <option value="AJK">Azad Kashmir</option>
+                            <option value="Giglit Baltistan">Gilgit Baltistan</option>
+                           
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                        <select class="form-control" name="city" id = "city" style="
+                        margin-left: 20px;" >
+                           
+                            <option value="0">City</option>
+                             @foreach($cities as $city)
+                             <option value="{{$city->id}}">{{$city->name}}</option>
+                             @endforeach
+                           
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                        <select class="form-control" name="rent" id = "rent" style="
+                        margin-left: 20px;" >
+                           
+                            <option value="0">Rent Range </option>
+                            <option value="1k-10k">1k-10k</option>
+                            <option value="10k-30k">10k-30k</option>
+                            <option value="30k-60k">30k-60k</option>
+                            <option value="60k-100k">60k-100k</option>
+                            <option value="100k+">100k+</option>
+                           
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                        <select class="form-control" name="type" id = "type" style="
+                        margin-left: 20px;"
+                        >
+                           
+                            <option value="0">Property Type </option>
+                            <option value="apartment">Apartment</option>
+                            <option value="hotel">Hotel</option>
+                            <option value="resort">Resorts</option>
+                            <option value="villa">Villas</option>
+                            <option value="cabin">Cabin</option>
+                           
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="pull-right" style="display:inline-block">
+                        <button class="btn btn-primary btn-sm" onclick="clear1()">Search</button>
+                        </span>
+                    </div>
+                </div>
+               
+                    
+               
+
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table class="datatable table table-bordered table-responsive table-striped">
@@ -141,6 +213,7 @@
 
 @section('scripts')
     <script>
+        
          function status(id,hid)
         {
             $.ajax({
@@ -156,6 +229,10 @@
                 }
         });
     }
+    function clear1()
+        {
+            console.log('d');
+        }
         $(document).on('click', '.delete', function (e) {
 
             var form = $(this).parents('form:first');
