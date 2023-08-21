@@ -26,4 +26,5 @@ class PaymentLog extends Model
     {
         return $this->belongsTo('App\Hotel');
     }
+   
 }

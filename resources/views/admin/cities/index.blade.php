@@ -22,8 +22,7 @@
         <section class="content container-fluid">
 
             <!------------------------------->  
-                                                                                                                                                                                                                                                                                                                | Your Page Content Here |
-                                                                                                                                                                                                                                                                                                                -------------------------->
+                                                                                                                                                                                                                                                                                                               
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title" style="display:block">Manage Cities

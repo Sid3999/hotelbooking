@@ -22,15 +22,15 @@
             <div class="card-body">
               <div class="container mb-5 mt-3">
                 <div class="row d-flex align-items-baseline">
-                  <div class="col-md-9">
+                  <div class="col-md-10">
                     <p style="color: #7e8d9f;font-size: 20px;">Invoice >> <strong>ID: {{$log->invoice_id}}</strong></p>
                   </div>
-                  {{-- <div class="col-md-3">
-                    <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"><i
-                        class="fas fa-print text-primary"></i> Print</a>
-                    <a class="btn btn-light text-capitalize" data-mdb-ripple-color="dark"><i
-                        class="far fa-file-pdf text-danger"></i> Export</a>
-                  </div> --}}
+                  <div class="col-md-2">
+                    <a  href="/print/{{$log->id}}" class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"><i
+                        class="fa fa-print"></i> Print</a>
+                    {{-- <a class="btn btn-light text-capitalize" data-mdb-ripple-color="dark"><i
+                        class="far fa-file-pdf text-danger"></i> Export</a> --}}
+                  </div>
                   <hr>
                 </div>
           
@@ -116,6 +116,20 @@
 @section('title', 'Payemnts') 
 @section('custom-js')
 <script>
+//   function pdf()
+//   {
+     
+// //     const PDFDocument = require('pdfkit');
+// //     const fs  = require('fs');
+// // // create a document the same way as above
+// //    const doc = new PDFDocument;
+// // // add your content to the document here, as usual
+// //    doc.text('Hello world!');
+// // // get a blob when you're done
+// //    doc.pipe(fs.createWriteStream('Demo.pdf'));
+// //     doc.end();
+//   }
+ 
     function calculate()
     {
     var subamount = $("#subamount").val();

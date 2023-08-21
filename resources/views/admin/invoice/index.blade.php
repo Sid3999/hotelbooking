@@ -233,5 +233,6 @@
 //         toastr.error('Please select user');
 //     }
 // });
+
 </script>
 @endsection

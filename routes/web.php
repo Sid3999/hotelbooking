@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/generate_invoice' , 'PaymentController@generateInvoice');
         Route::get('invoice/{id}' , 'PaymentController@Invoice');
         Route::get('/invoices/index' , 'PaymentController@allinvoices')->name('allinvoices');
+        Route::get('/print/{id}' , 'PaymentController@print')->name('print');
         
      
     //ban user

@@ -8,7 +8,8 @@ use App\PaymentLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-
+use App\Models\User;
+use PDF;
 class PaymentController extends Controller
 {
     public function index()
@@ -95,5 +96,18 @@ class PaymentController extends Controller
     {
         $logs = PaymentLog::where('user_id',Auth::user()->id)->get();
         return view('admin.invoice.index' , compact('logs'));
+    }
+    public function print($id)
+    {
+        // // dd('hello');
+        $log =PaymentLog::where('id',$id)->with('User')->first();
+       
+       
+        $pdf = PDF::loadView('admin.payments.pdf', compact('log'));
+        // dd($pdf);
+        return $pdf->download('invoice.pdf');
+      
+    //    dd($log);
+        // return view('admin.payments.pdf' , compact('log'));
     }
 }
