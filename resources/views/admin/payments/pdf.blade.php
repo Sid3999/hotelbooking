@@ -155,7 +155,7 @@ tr:hover .cut { opacity: 1; }
 	</head>
 	<body>
 		<header>
-			<h1>Invoice</h1>
+			<h1>{{$log->invoice_id}}</h1>
 			<address contenteditable>
 				<p>Name:-    {{$log->User->name}}</p>
 				<p>Address:- {{$log->User->address}}</p>
