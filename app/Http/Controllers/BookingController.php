@@ -220,7 +220,12 @@ class BookingController extends Controller
     }
 
     public function bookingDashboard(){
-        // dd(1);
+        
+        if(Auth::user()->roles->first()->id == 3 || Auth::user()->roles->first()->id == 1)
+        {
+            return redirect('dashboard');
+        }
+       
         $bookings=RoomBooking::with('roomCategory')->where('user_id',\auth()->user()->id)->get();
         return view('booking_message',compact('bookings'));
     }

@@ -223,9 +223,9 @@
                                     @endphp
 
                                     @if ($userRoles->contains('user'))
-                                        <div class="pull-left">
+                                        {{-- <div class="pull-left">
                                             <a href="{{ url('/home') }}" class="btn btn-default btn-flat">Home</a>
-                                        </div>
+                                        </div> --}}
                                     @endif
 
                                     <div class="pull-right">

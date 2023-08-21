@@ -19,6 +19,12 @@ class CustomerController extends Controller
         if(auth::user()){
             $user=User::find(auth::user()->id);
             if($user)
+            if(Auth::user()->roles->first()->id == 3 || Auth::user()->roles->first()->id == 1)
+            {
+                return redirect('profile');
+            }
+           
+
             return view('customer.profile'  , compact('user'));
         }
     }
@@ -26,6 +32,7 @@ class CustomerController extends Controller
         return view('customer.myorder');
     }
     public function changepassword(){
+      
         return view('customer.changepassword');
     }
 

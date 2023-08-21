@@ -78,7 +78,7 @@
     <!-- Main content -->
     <section class="content container-fluid"> 
 
-    
+      @if (Auth::user()->roles->first()->id == 3)
 <div class="container">
     <div class="row">
     <div class="col-md-5">
@@ -115,6 +115,44 @@
     </div>
   </div>
 </div>
+@else
+<div class="container">
+  <div class="row">
+  <div class="col-md-5">
+    <div class="card-counter primary">
+      <i class="fa fa-user"></i>
+      <span class="count-numbers">{{$user}}</span>
+      <span class="count-name">Total Customers</span>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card-counter danger">
+      <i class="fa fa-h-square"></i>
+      <span class="count-numbers">{{$hotels}}</span>
+      <span class="count-name">Total Hotels</span>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5">
+    <div class="card-counter success">
+      <i class="fa fa-money"></i>
+      <span class="count-numbers">{{$revenue}}</span>
+      <span class="count-name">Revenue</span>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card-counter info">
+      <i class="fa fa-map-marker"></i>
+      <span class="count-numbers">{{$cities}}</span>
+      <span class="count-name">No of Cities</span>
+    </div>
+  </div>
+</div>
+</div>
+@endif
 
 
     </section>

@@ -53,7 +53,7 @@ class LoginController extends Controller
         elseif($userRoles->contains(2)){
             $this->redirectTo = '/booking-dashboard';
         } else {
-            $this->redirectTo = '/home';
+            $this->redirectTo = '/dashboard';
         }
     }
 

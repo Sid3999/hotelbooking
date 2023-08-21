@@ -1,6 +1,10 @@
+
 @extends('layouts.theme')
+
 @section('content')
-@include('title','Change Password')
+
+
+
 @include('include/navbar')
 @include('include/breadcrumb', ['page' => 'Change Password'])
 

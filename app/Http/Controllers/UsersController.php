@@ -17,6 +17,7 @@ use App\Permission;
 use App\HotelGallery;
 use App\HotelService;
 use  App\HotelSurrounding;
+use App\PaymentLog;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -36,21 +37,38 @@ class UsersController extends Controller
 
     public function dashboard()
     {
-        $userRoles = Auth::user()->roles->pluck('name');
-        // $hotelno = Hotel::where('user_id',Auth::user()->id)->count();
-        $hotels = Hotel::where('user_id',Auth::user()->id)->get();
+       
+        $userRoles = Auth::user()->roles->pluck('id');
         $hotelno = 0;
         $roomno = 0;
         $bookings = 0;
         $revenue = 0;
+        $user = 0;
+        $cities = 0;
+        if(Auth::user()->roles->first()->id == 2)
+        {
+            return redirect('booking-dashboard');
+        }
+
+    //    dd($userRoles);
+        // $hotelno = Hotel::where('user_id',Auth::user()->id)->count();
+        if(Auth::user()->roles->first()->id == 3)
+        {
+        $hotels = Hotel::where('user_id',Auth::user()->id)->get();
+        }
+        else
+        {
+            $hotels = Hotel::get();
+            $user  = User::get()->count();
+            $cities = City::get()->count();
+            $revenue = PaymentLog::where('payment_status', '1')->sum('payment');
+        }
+       
         foreach($hotels as $hotel) 
         {
            $hotelno += 1;
-           $rooms = Room::where('hotel_id',$hotel->id)->get();
-           foreach($rooms as $room)
-           {
-             $roomno += 1;
-           }
+           $rooms = Room::where('hotel_id',$hotel->id)->count();
+           $roomno = $roomno + $rooms;
            $roombookings =  RoomBooking::where('hotel_id' , $hotel->id )->get();
            foreach($roombookings as $roombooking )
            {
@@ -60,7 +78,7 @@ class UsersController extends Controller
 
         }
         
-        return view('admin.dashboard' , ['bookings' => $bookings , 'hotels' => $hotelno , 'rooms' => $roomno , 'revenue' => $revenue ]);
+        return view('admin.dashboard' , ['bookings' => $bookings , 'hotels' => $hotelno , 'rooms' => $roomno , 'revenue' => $revenue , 'user' => $user , 'cities' => $cities ]);
     }
 
     public function nopermission()
