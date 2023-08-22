@@ -26,7 +26,7 @@
                                                                                                                                                                                                                                                                                                                 -------------------------->
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title" style="display:block">Manage Categories
+                    <h3 class="box-title" style="display:block">Manage Rooms
                         <span class="pull-right" style="display:inline-block">
                             <a class="btn btn-primary btn-sm" href="{{ route('hotel-rooms.create') }}"> <i
                                     class="fa fa-plus"></i> Add New</a>
@@ -34,19 +34,107 @@
                 
                     </h3>
                 </div>
-                <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                    <select class="form-control" name="hotel" id = "hotel" style="
-                    margin-left: 20px;" onchange="hotelsearch()">
-                       
-                        <option value="0"> Select Hotel </option>
-                        @foreach($hotels as $hotel)
-                        <option value="{{$hotel->id}}">{{$hotel->title}}</option>
-                        @endforeach
-                       
-                    </select>
+                {{-- <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                        <select class="form-control" name="Category" id = "Category" style="
+                        margin-left: 20px;">
+                          
+                            <option value="0"> Category </option>
+                            @foreach ($roomCategory as $roomCategor )
+                            <option value="{{$roomCategor->id}}"> {{$roomCategor->title}} </option>
+                            @endforeach
+                           
+                           
+                        </select>
+                        </div>
                     </div>
+                </div> --}}
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                        <select class="form-control" name="hotel" id = "hotel" style="
+                        margin-left: 5px;">
+                          
+                            <option value="0"> Hotel </option>
+                            @foreach ($hotels as $hotel )
+                            <option value="{{$hotel->id}}"> {{$hotel->title}} </option>
+                            @endforeach
+                           
+                           
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                        <select class="form-control" name="Category" id = "Category" style="
+                        margin-left: -11px;">
+                          
+                            <option value="0"> Category </option>
+                            @foreach ($roomCategory as $roomCategor )
+                            <option value="{{$roomCategor->id}}"> {{$roomCategor->title}} </option>
+                            @endforeach
+                           
+                           
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                        <select class="form-control" name="floor" id = "floor" style="
+                        margin-left: -11px;" >
+                           
+                            <option value="0">Floor</option>
+                            <option value="Basement">Basement</option>
+                            <option value="Office">Ground</option>
+                            <option value="First">First</option>
+                            <option value="Second">Second</option>
+                            <option value="Third">Third</option>
+                            <option value="Fourth">Fourth</option>
+                            <option value="Fifth">Fifth</option>
+                            <option value="Sixth">Sixth</option>
+                            <option value="Sixth">Seventh</option>
+                            <option value="Eighth">Eighth</option>
+                            <option value="Ninth">Ninth</option>
+                            <option value="Tenth">Tenth</option>
+                            <option value="Eleventh">Eleventh</option>
+                            <option value="Twelfth">Twelfth</option>
+                           
+                           
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                        <select class="form-control" name="status" id = "status" style="
+                        margin-left: -11px;" >
+                           
+                            <option value="0"> Status </option>
+                            <option value="true" >Booked</option>
+                            <option value="false" >Not Booked</option>
+                           
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                       <input type="number" id="min" name="min" class="form-control" style="
+                       margin-left: -11px;" placeholder="Min Price">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                       <input type="number" id="max" name="max" class="form-control" style="
+                       margin-left: -11px;" placeholder="Max Price">
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="row">
+                <div class="col-md-12">
+                    <span class="pull-right" style="display:inline-block">
+                    <button class="btn btn-primary btn-sm" style = "margin-left:-70px" onclick="check()" >Search</button>
+                    </span>
                 </div>
             </div>
                 <!-- /.box-header -->
@@ -165,6 +253,18 @@
 
 @section('scripts')
     <script>
+        function check()
+        {
+         var category = $('select[id=Category]').val();
+         var floor = $('select[id=floor]').val();
+         var status = $('select[id=status]').val();
+         var min = $('#min').val();
+         var max = $('#max').val();
+         var hotel = $('select[id=hotel]').val(); 
+        //  window.alert(category + floor + status + min + max);
+
+          window.location.href = "/hotel-rooms?category="+ category + "&hotel=" + hotel + "&status=" + status  + "&floor=" + floor + "&min=" + min + "&max=" + max; 
+        }
         function hotelsearch()
         {
             var e = document.getElementById("hotel");

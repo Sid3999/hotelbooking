@@ -159,7 +159,7 @@
                 <li class = "treeview">
                  <a href="#">
                     <i class="fa fa-hotel"></i>
-                    <span>Info</span>
+                    <span>Hotel Management</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>

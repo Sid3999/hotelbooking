@@ -54,7 +54,7 @@
                                         <div class="form-group">
                                             <label class="form-control-label">Property Type</label>
                                             <select name="type" id="type" id="type" class="form-control">
-                                                <option value="apartment">Apartment</option>
+                                                <option value="apartment" >Apartment</option>
                                                 <option value="hotel">Hotel</option>
                                                 <option value="resort">Resorts</option>
                                                 <option value="villa">Villas</option>
@@ -63,16 +63,21 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Rent Range</label>
-                                            <select name="rent_range" id="rent_range" class="form-control">
-                                                <option value="1k-10k">1k-10k</option>
-                                                <option value="10k-30k">10k-30k</option>
-                                                <option value="30k-60k">30k-60k</option>
-                                                <option value="60k-100k">60k-100k</option>
-                                                <option value="100k+">100k+</option>
-                                            </select>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Minimun Range</label>
+                                                <input type="number" id="min_range" name="min_range" class="form-control" >
+                                            </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Maximum Range</label>
+                                                    <input type="number" id="max_range" name="max_range" class="form-control" >
+                                                </div>
+                                                </div>
                                         </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="row">

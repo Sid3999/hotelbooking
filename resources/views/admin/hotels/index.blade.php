@@ -17,7 +17,7 @@
                 <li class="active">Hotels List</li>
             </ol>
         </section>
-
+        
         <!-- Main content -->
         <section class="content container-fluid">
 
@@ -35,20 +35,21 @@
                         </span>
                     </h3>
                 </div>
+             
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
                         <select class="form-control" name="province" id = "province" style="
                         margin-left: 20px;">
-                           
+                          
                             <option value="0">Province </option>
-                            <option value="ICT">ICT</option>
-                            <option value="KP">KP</option>
-                            <option value="Punjab">Pubjab</option>
-                            <option value="Sindh">Sindh</option>
-                            <option value="Balochistan">Balochistan</option>
-                            <option value="AJK">Azad Kashmir</option>
-                            <option value="Giglit Baltistan">Gilgit Baltistan</option>
+                            <option value="ICT"  @if($province === "ICT") {{'selected'}} @endif>  ICT</option>
+                            <option value="KP" @if($province === "KP") {{'selected'}} @endif>KP</option>
+                            <option value="Punjab" @if($province === "Punjab") {{'selected'}} @endif>Punjab</option>
+                            <option value="Sindh" @if($province === "Sindh") {{'selected'}} @endif>Sindh</option>
+                            <option value="Balochistan" @if($province === "Balochistan") {{'selected'}} @endif>Balochistan</option>
+                            <option value="AJK" @if($province === "AJK") {{'selected'}} @endif>Azad Kashmir</option>
+                            <option value="Giglit Baltistan" @if($province === "Giglit Baltistan") {{'selected'}} @endif>Gilgit Baltistan</option>
                            
                         </select>
                         </div>
@@ -60,7 +61,7 @@
                            
                             <option value="0">City</option>
                              @foreach($cities as $city)
-                             <option value="{{$city->id}}">{{$city->name}}</option>
+                             <option value="{{$city->id}}" @if($citys == $city->id) {{'selected'}} @endif>{{$city->name}}</option>
                              @endforeach
                            
                         </select>
@@ -68,42 +69,39 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                        <select class="form-control" name="rent" id = "rent" style="
-                        margin-left: 20px;" >
-                           
-                            <option value="0">Rent Range </option>
-                            <option value="1k-10k">1k-10k</option>
-                            <option value="10k-30k">10k-30k</option>
-                            <option value="30k-60k">30k-60k</option>
-                            <option value="60k-100k">60k-100k</option>
-                            <option value="100k+">100k+</option>
-                           
-                        </select>
+                         <input type="number" id="min_range" name="min_range" class="form-control" @if($min == 0) {{"placeholder='Minimum Range'"}} @else {{"value=$min"}} @endif>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                         <input type="number" id="max_range" name="max_range" class="form-control" @if($min == 0) {{"placeholder='Maximum Range'"}} @else {{"value=$max"}} @endif>
+                        </div>
+                    </div>
+                
+                 
                     <div class="col-md-2">
                         <div class="form-group">
                         <select class="form-control" name="type" id = "type" style="
                         margin-left: 20px;"
                         >
-                           
+                            
                             <option value="0">Property Type </option>
-                            <option value="apartment">Apartment</option>
-                            <option value="hotel">Hotel</option>
-                            <option value="resort">Resorts</option>
-                            <option value="villa">Villas</option>
-                            <option value="cabin">Cabin</option>
+                            <option value="apartment" @if($type === "apartment") {{'selected'}} @endif>Apartment</option>
+                            <option value="hotel" @if($type === "hotel") {{'selected'}} @endif>Hotel</option>
+                            <option value="resort" @if($type === "resort") {{'selected'}} @endif>Resorts</option>
+                            <option value="villa" @if($type === "villa") {{'selected'}} @endif>Villas</option>
+                            <option value="cabin" @if($type === "cabin") {{'selected'}} @endif>Cabin</option>
                            
                         </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <span class="pull-right" style="display:inline-block">
-                        <button class="btn btn-primary btn-sm" onclick="clear1()">Search</button>
+                        <button class="btn btn-primary btn-sm" id = "check" >Search</button>
                         </span>
                     </div>
                 </div>
-               
+             
                     
                
 
@@ -117,7 +115,7 @@
                             <th>Title</th>
                             <th>Rent Range</th>
                             <th>Type</th>
-                            <th>Area</th>
+                            <th>Province</th>
                             <th>City</th>
                             <th>Created</th>
                             <th>Actions</th>
@@ -135,8 +133,8 @@
                                     <td>{{ $hotel->title }}</td>
                                     <td>{{ $hotel->rent_range }}</td>
                                     <td>{{ ucfirst($hotel->type) }}</td>
-                                    <td>{{ ucfirst($hotel->area) }}</td>
-                                    <td>{{ ucfirst($hotel->city) }}</td>
+                                    <td>{{ ucfirst($hotel->provience) }}</td>
+                                    <td>@php $cits = \App\City::where('id',$hotel->city_id)->first(); @endphp {{ ucfirst($cits->name) }}</td>
                                     <td>{{ $hotel->created_at->diffForHumans() }}</td>
                                     <td>
                                       
@@ -221,7 +219,7 @@
                 url: '{{ url('updatestatus') }}',
                 data: {
                 id : id,
-                hid : hid
+                hid : hid,
                 cid : 2
                 },
                 success: function () {
@@ -229,10 +227,16 @@
                 }
         });
     }
-    function clear1()
-        {
-            console.log('d');
-        }
+    $('#check').click(function()
+    {
+         var province = $('select[id=province]').val();
+         var city = $('select[id=city]').val();
+         var min_rent = $('#min_range').val();
+         var max_rent =  $('#max_range').val();
+         var type = $('select[id=type]').val();
+          window.location.href = "/hotel?province="+ province + "&city=" + city  + "&min=" + min_rent + "&max=" + max_rent + "&type=" + type; 
+        
+    });
         $(document).on('click', '.delete', function (e) {
 
             var form = $(this).parents('form:first');

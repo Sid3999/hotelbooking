@@ -24,15 +24,86 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    { 
+    public function index(Request $request , Hotel $hotel )
+    {  
         $cities = City::all();
-        if (Auth::user()->roles->first()->id == 1) {
-            $hotels = Hotel::all();
-        } else {
-            $hotels = Hotel::where('user_id', auth()->user()->id)->get();
+        $province = 0;
+        $citys = 0;
+        $rent = 0;
+        $type = 0;
+        $min = 0;
+        $max = 0;
+        if(isset($request->province))
+        {
+             
+             if($request->province != '0')
+             {
+             $hotel = $hotel->where('provience',$request->province);
+             $province = $request->province;
+             }
+             if($request->city != '0')
+             {
+                $hotel = $hotel->where('city_id',$request->city);
+                $citys = $request->city;
+             }
+             if($request->min != '')
+             {
+                if($request->max == ''){
+                    return redirect()->back()->with(['message' => 'Select Max Range', 'alert-type' => 'error']);
+                 }
+               else
+                {
+                    $range = 'Rs '  . $request->min . ' - Rs '. $request->max ; 
+                    $hotel = $hotel->where('rent_range',$range);
+                    $min = $request->min;
+                }
+             }
+             if($request->max != '')
+             {
+                if($request->min == ''){
+                    return redirect()->back()->with(['message' => 'Select Min Range', 'alert-type' => 'error']);
+                }
+                else
+                {
+                    $range = 'Rs '  . $request->min . ' - Rs '. $request->max ;
+                    $hotel = $hotel->where('rent_range',$range);
+
+                }
+                 $max = $request->max;
+             }
+
+             if($request->type != '0')
+             {
+                $hotel = $hotel->where('type',$request->type);
+                $type = $request->type;
+             }
+            // $filter = '->where("provience",'. $request->province . ')';
+            //  $check = 'select * from hotels where provience = $request->province';
+            if (Auth::user()->roles->first()->id == 1) {
+               
+                $hotels = $hotel->get();
+                // $hotels   = DB::select($check);
+                // // $hotels =  DB::select('select * from hotels where id = 20');
+                // $hotels = Hotel::all();
+                
+            } else {
+                
+                $hotel = $hotel->where('user_id',auth()->user()->id);
+                $hotels = $hotel->get();
+               
+            }
         }
-        return view('admin.hotels.index', compact('hotels' , 'cities'));
+        else
+        {
+            if (Auth::user()->roles->first()->id == 1) {
+                $hotels = Hotel::all();
+            } else {
+                $hotels = Hotel::where('user_id', auth()->user()->id)->get();
+            }
+        }
+       
+       
+        return view('admin.hotels.index', compact('hotels' , 'cities' , 'province' , 'citys' , 'rent' , 'type' , 'min' , 'max' ));
     }
 
     /**
@@ -54,14 +125,17 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
-
+      
+          $range = 'Rs '  . $request->min_range . ' - Rs '. $request->max_range ; 
+          
         $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
             'description' => 'required|string',
             'thumbnail' => 'required|mimes:jpeg,jpg,png',
             'type' => 'required',
-            'rent_range' => 'required',
+            'min_range' => 'required',
+            'max_range' => 'required',
             'provience' => 'required|string',
             'area' => 'required|string',
             'address' => 'required|string',
@@ -70,7 +144,8 @@ class HotelController extends Controller
         $HotelObject->title = $request->title;
         $HotelObject->slug = Str::slug($request->slug);
         $HotelObject->description = $request->description;
-
+        $HotelObject->city_id = $request->city;
+        
         // image upload
         $path = '';
         if ($request->hasFile('thumbnail')) {
@@ -87,10 +162,11 @@ class HotelController extends Controller
 //            $name = $name . $extension;
 //            $path = $request->thumbnail->storeAs('images/Hotels', $name, 'public');
 //        }
+        
         $HotelObject->thumbnail = $path;
         $HotelObject->uuid = (string)Str::uuid();
         $HotelObject->type = $request->type;
-        $HotelObject->rent_range = $request->rent_range;
+        $HotelObject->rent_range = $range;
         $HotelObject->provience = $request->provience;
         $HotelObject->area = $request->area;
         $HotelObject->address = $request->address;

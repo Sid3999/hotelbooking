@@ -17,25 +17,59 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request )
     {
         $rooms = []; 
         $hoteDatas = Hotel::where('user_id', Auth::user()->id)->get()->toarray();
         $hotels = Hotel::where('user_id', Auth::user()->id)->get();
+        $roomCategory = RoomCategory::where('user_id', Auth::user()->id)->get();
       
         if ($hoteDatas) {
             foreach($hoteDatas as $hoteData)  
-            {        
-            $Rooms = Room::where('user_id', $hoteData['user_id'])->where('hotel_id', $hoteData['id'])->get()->toarray();
-            $rooms =  array_merge($rooms,$Rooms);
-             
+            { 
+            $Rooms = new Room();       
+            $Rooms = $Rooms->where('hotel_id', $hoteData['id']);
+            
+        
+            if(isset($request->category))
+            {
+                if($request->hotel != 0)
+                {
+                    $Rooms = $Rooms->where('hotel_id', $request->hotel);
+                }
+                if($request->category != 0)
+                {
+                    $Rooms = $Rooms->where('category_id', $request->category);
+                }
+                if($request->floor != 0)
+                {
+                    $Rooms = $Rooms->where('floor', $request->floor);
+                }
+                if($request->status != 0)
+                {
+                    $Rooms = $Rooms->where('reserved', $request->status);
+                }
+                if($request->min != '')
+                {
+                    $Rooms = $Rooms->where('price', '>=' , $request->min);
+                }
+                if($request->max != '')
+                {
+                    $Rooms = $Rooms->where('price', '<=' , $request->max);
+                }
+
+            }
+            
+            $Room = $Rooms->get()->toarray();
+            $rooms =  array_merge($rooms,$Room);
+          
             }
             
         } else {
              $rooms = [];
         }
-
-        return view('admin.rooms.index', compact('rooms' , 'hotels'));
+       
+        return view('admin.rooms.index', compact('rooms' , 'hotels' , 'roomCategory'));
     }
 
     /**
