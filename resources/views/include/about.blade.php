@@ -35,8 +35,15 @@
                        <div class="row justify-content-between align-items-end">
                            <div class="col-6 col-md-1 col-lg-2">
                                <label for="checkIn">City</label>
-                               <input type="text" class="form-control @error('city') is-invalid @enderror" 
-                                   id="city"name="city" value="{{ old('city') }}" placeholder="where are you going ?">
+                             
+                               <select class="form-control" id="city"name="city">
+                                @foreach ($cities as $city )
+                                <option value="{{$city->id}}"> {{ucfirst($city->name)}}</option>
+                                @endforeach
+                               
+                               </select>
+                               {{-- <input type="text" class="form-control @error('city') is-invalid @enderror" 
+                                   id="city"name="city" value="{{ old('city') }}" placeholder="where are you going ?"> --}}
                            </div>
                            <div class="col-5 col-md-1 col-lg-2">
                                <label for="checkIn">Check In</label>
@@ -74,6 +81,7 @@
                            <div class="col-4 col-md-2 col-lg-1">
                                <label for="children">Children</label>
                                <select name="children" id="children" class="form-control">
+                                   <option value="00">00</option>
                                    <option value="01">01</option>
                                    <option value="02">02</option>
                                    <option value="03">03</option>

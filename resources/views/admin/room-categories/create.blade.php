@@ -36,14 +36,7 @@
                                                 value="{{ old('title') }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="form-control-label">Select Facility</label>
-                                        <select name="facility[]"  class="select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true">
-                                            @foreach($facilities as $facility)
-                                                <option value="{{$facility->name}}" >{{$facility->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                   
 {{--                                    <div class="col-md-3">--}}
 {{--                                        <div class="form-group">--}}
 {{--                                            <label class="form-control-label">Room Size</label>--}}

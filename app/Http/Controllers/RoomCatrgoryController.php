@@ -47,12 +47,10 @@ class RoomCatrgoryController extends Controller
     {
         $request->validate([
             'title' => 'required|string|unique:room_categories|max:255',
-            'facility' => 'required',
         ]);
         $hoteData = Hotel::where('user_id', Auth::user()->id)->first();
         $RoomCateObject = new RoomCategory;
         $RoomCateObject->title = $request->title;
-        $RoomCateObject->facilities = $request->facility;
         $RoomCateObject->user_id = $hoteData->user_id;
         $RoomCateObject->hotel_id = $hoteData->id;
         $RoomCateIsSave = $RoomCateObject->save();

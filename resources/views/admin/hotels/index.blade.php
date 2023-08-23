@@ -69,12 +69,12 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                         <input type="number" id="min_range" name="min_range" class="form-control" @if($min == 0) {{"placeholder='Minimum Range'"}} @else {{"value=$min"}} @endif>
+                         <input type="number" id="min_range" name="min_range" class="form-control" @if($min == 0) {{"placeholder=Minimum_Range"}}  @else {{"value=$min"}} @endif>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                         <input type="number" id="max_range" name="max_range" class="form-control" @if($min == 0) {{"placeholder='Maximum Range'"}} @else {{"value=$max"}} @endif>
+                         <input type="number" id="max_range" name="max_range" class="form-control" @if($min == 0) {{"placeholder=Maximum_Range"}} @else {{"value=$max"}} @endif>
                         </div>
                     </div>
                 
@@ -184,17 +184,7 @@
                         @endcan --}}
                         </tbody>
 
-                        <tfoot>
-                        <tr>
-                            <th>#</th>
-                            <th>Thumbnail</th>
-                            <th>Title</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th>Created</th>
-                            <th>Actions</th>
-                        </tr>
-                        </tfoot>
+                       
                     </table>
                 </div>
                 <!-- /.box-body -->

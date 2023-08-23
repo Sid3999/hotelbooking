@@ -144,9 +144,12 @@
                             <div class="col-6 col-md-1 col-lg-2">
                                 <label for="checkIn">City</label>
 
-                                <input type="text" class="form-control @error('city') is-invalid @enderror" id="city"
-                                    name="city" value="{{ session()->get('variableName')['city'] }}"
-                                    placeholder="where are you going ?">
+                                <select class="form-control" id="city"name="city">
+                                    @foreach ($cities as $city )
+                                    <option value="{{$city->id}}" @if(session()->get('variableName')['city'] == $city->id) {{'selected'}} @endif> {{ucfirst($city->name)}}</option>
+                                    @endforeach
+                                   
+                                   </select>
                             </div>
                             <div class="col-5 col-md-1 col-lg-2">
                                 <label for="checkIn">Check In</label>
@@ -242,7 +245,7 @@
                                 </select>
                             </div>
                             <div class="col-12 col-md-2">
-                                <button type="submit" class="form-control btn roberto-btn w-100" style="padding: 0 50px;">Check
+                                <button type="submit" class="form-control btn roberto-btn w-100" >Check
                                     Availability
                                 </button>
                             </div>
@@ -259,6 +262,9 @@
     <div class="roberto-rooms-area section-padding-100-0">
         <div class="container">
             @if ($hotels->count() > 0)
+            {{-- @php
+                dd($hotels);
+            @endphp --}}
                 @foreach ($hotels as $hotel)
                     <div class="row">
                         <div class="col-md-12">
@@ -335,7 +341,7 @@
                         </div>
                     </div>
                 @endforeach
-            @endif
+            @else
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -470,6 +476,7 @@
                     </div>
                 </div> --}}
             </div>
+            @endif
         </div>
     </div>
     <!-- Rooms Area End -->

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Facility;
 use App\Hotel;
 use Illuminate\Http\Request;
 use App\HotelGallery;
@@ -114,7 +115,8 @@ class HotelController extends Controller
     public function create()
     {
         $citys = City::all();
-        return view('admin.hotels.create',compact('citys'));
+        $facilities = Facility::all();
+        return view('admin.hotels.create',compact('citys' , 'facilities'));
     }
 
     /**
@@ -126,6 +128,7 @@ class HotelController extends Controller
     public function store(Request $request)
     {
       
+         
           $range = 'Rs '  . $request->min_range . ' - Rs '. $request->max_range ; 
           
         $request->validate([
@@ -240,9 +243,14 @@ class HotelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Hotel $hotel)
-    {
-        // dd($hotel->service);
-        return view('admin.hotels.edit', compact('hotel'));
+    { 
+      
+        $string =  (explode("-",$hotel->rent_range));
+        $min =  preg_replace("/[^0-9]/", '', $string[0]);
+        $max =  preg_replace("/[^0-9]/", '', $string[1]);
+        $cities = City::all();
+        $facilities = Facility::all();
+        return view('admin.hotels.edit', compact('hotel' , 'cities' , 'facilities' , 'min' , 'max'));
     }
 
     /**
@@ -254,14 +262,15 @@ class HotelController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
+        $range = 'Rs '  . $request->min_range . ' - Rs '. $request->max_range ; 
         $hotel = Hotel::find($id);
         $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
             'description' => 'required|string',
             'type' => 'required',
-            'rent_range' => 'required',
+            'min_range' => 'required',
+            'max_range' => 'required',
             'provience' => 'required|string',
             'area' => 'required|string',
             'address' => 'required|string',
@@ -287,7 +296,7 @@ class HotelController extends Controller
 //            $hotel->thumbnail = $path;
 //        }
         $hotel->type = $request->type;
-        $hotel->rent_range = $request->rent_range;
+        $hotel->rent_range = $range;
         $hotel->provience = $request->provience;
         $hotel->city_id = $request->city ;
         $hotel->area = $request->area;

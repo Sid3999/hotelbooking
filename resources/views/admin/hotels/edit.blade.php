@@ -76,16 +76,21 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Rent Range</label>
-                                            <select name="rent_range" id="rent_range" class="form-control">
-                                                <option value="5k-15k"   {{$hotel->rent_range == '5k-15k'   ? 'selected' : ''}}>5k-15k</option>
-                                                <option value="5k-30k"   {{$hotel->rent_range == '5k-30k'   ? 'selected' : ''}}>5k-30k</option>
-                                                <option value="10k-60k"  {{$hotel->rent_range == '10k-60k'  ? 'selected' : ''}}>10k-60k</option>
-                                                <option value="10k-60k"  {{$hotel->rent_range == '10k-60k'  ? 'selected' : ''}}>10k-60k</option>
-                                                <option value="10k-100k" {{$hotel->rent_range == '10k-100k' ? 'selected' : ''}}>10k-100k</option>
-                                            </select>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Minimun Range</label>
+                                                <input type="number" id="min_range" name="min_range" class="form-control" value="{{$min}}">
+                                            </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Maximum Range</label>
+                                                    <input type="number" id="max_range" name="max_range" class="form-control" value="{{$max}}">
+                                                </div>
+                                                </div>
                                         </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="row">
@@ -114,11 +119,10 @@
                                         <div class="form-group">
                                             <label class="form-control-label">City</label>
                                             <select name="city" id="city"  class="form-control">
-                                                <option value="abbottabad" {{$hotel->city == "abbottabad"   ? 'selected' : ''}}>Abbottabad</option>
-                                                <option value="islamabad" {{$hotel->city == "islamabad"   ? 'selected' : ''}}>Islamabad</option>
-                                                <option value="rawalpindi" {{$hotel->city == "rawalpindi"   ? 'selected' : ''}}>Rawalpindi</option>
-                                                <option value="lahore"  {{$hotel->city == "lahore"   ? 'selected' : ''}}>Lahore</option>
-                                                <option value="karachi" {{$hotel->city == "karachi"   ? 'selected' : ''}}>Karachi</option>
+                                                @foreach ($cities as $city)
+                                                <option value="{{$city->id}}" {{$hotel->city_id == $city->id   ? 'selected' : ''}}>{{$city->name}}</option>
+                                                @endforeach
+                                             
                                             </select>
                                         </div>
                                     </div>
@@ -196,39 +200,34 @@
                             <div class="panel-body">
                                 <div class="form-group">
                                     <label class="form-control-label">Hotel Services</label>
-                                    <button id="servicebutebtn" class="pull-right btn btn-success"><i
-                                            class="fa fa-plus"></i>
-                                        Add New Services</button>
+                                    
                                 </div>
                                 @if(!$hotel->service->count() > 0)
                                     <div class="form-group row" id="serviceattBox">
                                         <div id="serviceDiv">
-                                            <div class="form-group col-md-8">
-                                                <input type="text" name="hotel_service[]" id="hotel_service"
-                                                    placeholder="Hotel Service" class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-2">
-                                                <button id="serRemoveBtn" class="btn btn-danger btn-block col-md-2"><i
-                                                        class="fa fa-trash"></i> </button>
-                                            </div>
+                                            @foreach ($facilities as $facility)
+                                            <input type="checkbox" name="hotel_service[]" value="{{$facility->name}}"> {{$facility->name}} 
+                                            <br>
+                                            @endforeach
                                         </div>
 
                                     </div>
                                 @else
-                                    @foreach ($hotel->service as $item)
+                                  
                                     <div class="form-group row" id="serviceattBox">
                                         <div id="serviceDiv">
                                             <div class="form-group col-md-8">
-                                                <input type="text" name="hotel_service[]" id="hotel_service"
-                                                   value="{{$item->service}}" class="form-control">
+                                                @foreach ($facilities as $facility)
+                                                
+                                              <input type="checkbox" name="hotel_service[]" value="{{$facility->name}}" @foreach ($hotel->service as $item) @if($facility->name == $item->service) {{'checked'}} @endif @endforeach> {{$facility->name}} 
+                                            <br>
+                                            
+                                            @endforeach
                                             </div>
-                                            <div class="form-group col-md-2">
-                                                <button id="serRemoveBtn" class="btn btn-danger btn-block col-md-2"><i
-                                                        class="fa fa-trash"></i> </button>
-                                            </div>
+                                           
                                         </div>
                                     </div>
-                                    @endforeach
+                                   
                                 @endif
                             </div>
                         </div>

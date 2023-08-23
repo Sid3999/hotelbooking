@@ -40,7 +40,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>Title</th>
-                                <th>Facilities</th>
                                 <th>Created</th>
                                 <th>Actions</th>
                             </tr>
@@ -51,7 +50,7 @@
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
                                         <td>{{ ucwords($category->title) }}</td>
-                                        <td>@foreach($category->facilities as $fac) {{$fac}}, @endforeach</td>
+                                        
                                         <td>{!! $category->created_at->diffForHumans() !!}</td>
 
                                         <td>
@@ -95,7 +94,7 @@
                                 <th>Title</th>
                                 <th>Facilities</th>
                                 <th>Created</th>
-                                <th>Actions</th>
+                                
                             </tr>
                         </tfoot>
                     </table>

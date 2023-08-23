@@ -166,24 +166,19 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-primary">
-                            <div class="panel-heading bg-primary">Hotel Services</div>
+                            <div class="panel-heading bg-primary">Hotel Facilities</div>
                             <div class="panel-body">
-                                <div class="form-group">
-                                    <label class="form-control-label">Hotel Services</label>
-                                    <button id="servicebutebtn" class="pull-right btn btn-success"><i
-                                            class="fa fa-plus"></i>
-                                        Add New Services</button>
-                                </div>
+                               
                                 <div class="form-group row" id="serviceattBox">
                                     <div id="serviceDiv">
                                         <div class="form-group col-md-8">
-                                            <input type="text" name="hotel_service[]" id="hotel_service"
-                                                placeholder="Hotel Service" class="form-control">
+                                            @foreach ($facilities as $facility)
+                                            <input type="checkbox" name="hotel_service[]" value="{{$facility->name}}"> {{$facility->name}} 
+                                            <br>
+                                            @endforeach
+                                           
                                         </div>
-                                        <div class="form-group col-md-2">
-                                            <button id="serRemoveBtn" class="btn btn-danger btn-block col-md-2"><i
-                                                    class="fa fa-trash"></i> </button>
-                                        </div>
+                                      
                                     </div>
 
                                 </div>

@@ -13,7 +13,7 @@ class Hotel extends Model
 
     public function rooms()
     {
-        return $this->hasMany('App\Room', 'hotel_id');
+        return $this->hasMany('App\Room', 'hotel_id' , 'id');
     }
 
     public function gallery()
