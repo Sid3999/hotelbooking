@@ -46,6 +46,15 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
+        // if(Auth::check())
+        // {
+        //     return 'd';
+        // }
+        // else
+        // {
+        //     $check = User::where('email', '=' ,$request->email)->where('password',bcrypt($request->password))->get('id');
+        //     return $check;
+        // }
         if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
            return $this->error('', 'unauthenticated', 402);
         }
@@ -137,7 +146,7 @@ class AuthController extends Controller
     public function resetpassword(Request $request)
     {
         $check = User::where('id',$request->id)->first();
-      
+        
         if ($check){
             $user = User::find($request->id);
             $user->password = Hash::make($request->password);
