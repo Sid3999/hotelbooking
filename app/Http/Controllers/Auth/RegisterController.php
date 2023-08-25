@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Emailverfication\emailverfication;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Request;
 
 class RegisterController extends Controller
 {
@@ -76,22 +78,23 @@ class RegisterController extends Controller
      * @param array $data
      * @return \App\User
      */
-    protected function create(array $data)
-    {
-        
+    protected function create(array $data , emailverfication $email)
+    {    
+       
         // $user_image = $data['image'];
         // $cnic = $data['cnic'];
         // $utility_bill = $data['utility_bill'];
+      
         $userdata = [
             'name' => $data['name'],
             'email' => $data['email'],
             'mobile' => $data['mobile'],
             'phone' => $data['phone'],
             'address' => $data['address'],
-            // 'image' => $data['image'],
-            // 'cnic' => $data['cnic'],
-            // 'utility_bill' => $data['utility_bill'],
-            // 'date_of_birth' => $data['date_of_birth'],
+            'image' => $data['image'],
+            'cnic' => $data['cnic'],
+            'utility_bill' => $data['utility_bill'],
+            'date_of_birth' => $data['date_of_birth'],
             'password' => Hash::make($data['password']),
             'is_active' => 1,
         ];
@@ -118,12 +121,14 @@ class RegisterController extends Controller
         }
         $user = User::create($userdata);
         $users = User::orderBy('id', 'desc')->first();
-       
+         
         if ($user) {
             $data = ['role_id' => 2, 'user_id' => $users->id];
             DB::table('role_user')->insert($data);
+            
+            
         }
-       
+        // $email->verfication($users->id ,  $userdata['email']);
         return $user;
        
       

@@ -489,9 +489,9 @@ stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.
                                                                     @endif
 
                                                                 </td>
-                                                                
+                                                              
                                                                 <td width = "20%">
-                                                                    <p>{{$report->price + $report->children_extra_price}}</p>
+                                                                    <p>{{($report->price + $report->children_extra_price) * $nights}} </p>
                                                                 </td>
                                                                 <td width = "20%">
                                                                     <select name="room_id[]"

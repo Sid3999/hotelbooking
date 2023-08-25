@@ -11,14 +11,28 @@ use App\Favourite;
 use App\RoomBooking;
 use App\RoomCategory;
 use App\BookingDetail;
+use App\Emailverfication\emailverfication;
+use App\Providers\EmailServicePovider;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class PageController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+       
+        if(isset($request->id))
+        {
+            $time = new DateTime();
+           
+            $user = User::find($request->id);
+            $user->email_verified_at = $time;
+            $user->update();
+            return redirect('/booking-dashboard');
+        }
+       
         $cities=City::all();
         $news=Blog::get()->take(3);
         return view('index',compact('cities','news'));
@@ -59,7 +73,10 @@ class PageController extends Controller
         if(request()->has('checkin-date') && request()->has('checkout-date') && request()->get('checkin-date') != '' && request()->get('checkout-date') != ''):
             $checkindate = request()->get('checkin-date') ? request()->get('checkin-date') : session()->get('checkin-date');
             $checkoutdate = request()->get('checkout-date') ? request()->get('checkout-date') : session()->get('checkout-date');
-            dd($checkindate, $checkoutdate);
+          
+            $nights = (strtotime($checkoutdate) - strtotime($checkindate)) / (60 * 60 * 24);
+         
+
             $alreadyBooked = BookingDetail::whereIn('hotel_id', [$id])
             ->where('booking_date', '>=', $checkindate)
             ->where('booking_date', '<=', $checkoutdate)
@@ -90,7 +107,7 @@ class PageController extends Controller
         }
         // dd($roomCategories);
         $checkFauvorite = (auth()->check()) ? Favourite::where('user_id', auth()->user()->id)->where('hotel_id', $id)->count() : 0;
-        return view('single-room', compact('hotel', 'roomCategories', 'alreadyBooked','checkFauvorite'));
+        return view('single-room', compact('hotel', 'roomCategories', 'alreadyBooked','checkFauvorite' , 'nights'));
     }
 
     public function room_available(Request $request)

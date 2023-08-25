@@ -27,6 +27,7 @@ Route::get('/contact', 'PageController@contact')->name('contact');
 Route::get('/room-link-booking', 'PageController@booking')->name('room-link-booking');
 Route::post('/bookingStore', 'BookingController@store')->name('booking.store');
 
+
 // wishlist routes start here
 Route::prefix('wishlist')->group(function () {
     Route::get('/store', [FavouriteController::class,'store'])->name('wishlist.store');
@@ -39,6 +40,7 @@ Route::get('admin', 'Auth\AdminLoginController@showLoginForm')->name('admin.logi
 Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
 Route::post('admin/login', 'Auth\AdminLoginController@login')->name('admin.login');
 Route::resource('register-as-business', 'Auth\RegisterAsBusinessController');
+
 /* Auth routes with email verified */
 Auth::routes(['verify' => true]);
 

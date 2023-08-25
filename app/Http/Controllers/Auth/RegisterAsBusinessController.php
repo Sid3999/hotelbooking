@@ -83,9 +83,9 @@ class RegisterAsBusinessController extends Controller
         }
       
         $save = DB::table('permission_user')->insert($permissionAssigns);
-        
+         $user->sendEmailVerificationNotification();
         return back()->with(['message' => "Your Business Register Successfully"]);
-        // $user->sendEmailVerificationNotification();
+       
         
     }
 

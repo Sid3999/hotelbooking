@@ -28,7 +28,13 @@ class Kernel extends ConsoleKernel
         // $schedule->command('second:redirect')
         //          ->everyMinute();
             $schedule->call(function () {
-                DB::table('checks')->delete();
+                $details = [
+                    'name' => 'Hello',
+                    'email' => 'This is for testing email using smtp',
+                    'message' => 'This is the message'
+                ];
+               
+                \Mail::to('siddique.softech@gmail.com')->send(new \App\Mail\ContactUs($details));
             })->everyMinute();
     }
 
